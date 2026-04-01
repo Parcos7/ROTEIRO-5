@@ -1,0 +1,46 @@
+using System;
+using System.Globalization;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Nome do Evento: ");
+        string nomeEvento = Console.ReadLine();
+
+        Console.Write("Data do Evento (dd/MM/yyyy): ");
+        DateTime dataEvento = DateTime.Parse(Console.ReadLine());
+
+        Console.Write("Valor do Ingresso: ");
+        double valorBase = double.Parse(Console.ReadLine());
+
+        Console.Write("Categoria (VIP ou Comum): ");
+        string categoriaInput = Console.ReadLine().ToUpper();
+
+        bool ehVip = categoriaInput.Contains("VIP");
+        double valorFinal = ehVip ? valorBase * 1.20 : valorBase; // VIP tem acréscimo de 20%
+        valorFinal = Math.Round(valorFinal, 2);
+
+        TimeSpan diferenca = dataEvento - DateTime.Today;
+        int diasRestantes = diferenca.Days;
+
+        Console.WriteLine("\n============================================");
+        Console.WriteLine("          COMPROVANTE DE INGRESSO           ");
+        Console.WriteLine("============================================");
+
+        string linha1 = string.Format("{0,-20} {1,21}", "Evento:", nomeEvento);
+        string linha2 = string.Format("{0,-20} {1,21:dd/MM/yyyy}", "Data:", dataEvento);
+        string linha3 = string.Format("{0,-20} {1,21}", "Categoria:", ehVip ? "Setor VIP" : "Setor Comum");
+        string linha4 = string.Format("{0,-20} {1,21:C2}", "Valor:", valorFinal);
+        string linha5 = string.Format("{0,-20} {1,21}", "Status:", diasRestantes >= 0 ? $"Faltam {diasRestantes} dias" : "Evento encerrado");
+
+        Console.WriteLine(linha1);
+        Console.WriteLine(linha2);
+        Console.WriteLine(linha3);
+        Console.WriteLine(linha4);
+        Console.WriteLine(linha5);
+        Console.WriteLine("============================================");
+
+        Console.ReadKey();
+    }
+}
